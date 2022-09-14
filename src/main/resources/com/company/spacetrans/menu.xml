@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://jmix.io/schema/ui/menu">
 
-    <menu id="application" caption="msg://com.company.spacetrans/menu.application" insertBefore="administration">
-        <item screen="st_User.browse" caption="msg://com.company.spacetrans.screen.user/UserBrowse.caption"/>
-        <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
+    <menu id="application" caption="msg://com.company.spacetrans/menu.application" insertBefore="administration" expanded="true">
+
+        <menu id="settings" caption="msg://com.company.spacetrans/menu_config.settings">
+            <item screen="st_User.browse" caption="msg://com.company.spacetrans.screen.user/UserBrowse.caption"/>
+            <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
+        </menu>
+        <menu id="references" caption="msg://com.company.spacetrans/menu_config.references" expanded="true">
+            <item screen="st_Gas.browse" caption="msg://com.company.spacetrans.screen.gas/gasBrowse.menu"/>
+            <item screen="st_Atmosphere.browse" caption="msg://com.company.spacetrans.screen.atmosphere/atmosphereBrowse.menu"/>
+            <item screen="st_Planet.browse" caption="msg://com.company.spacetrans.screen.planet/planetBrowse.menu"/>
+            <item screen="st_Moon.browse" caption="msg://com.company.spacetrans.screen.moon/moonBrowse.menu"/>
+        </menu>
+
     </menu>
 
 </menu-config>

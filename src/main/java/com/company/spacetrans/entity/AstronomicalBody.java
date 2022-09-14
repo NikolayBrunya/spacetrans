@@ -35,6 +35,7 @@ public class AstronomicalBody {
     @Lob
     private FileRef picture;
 
+
     public FileRef getPicture() {
         return picture;
     }
