@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://waybillEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="waybillDc"
+                  class="com.company.spacetrans.entity.Waybill">
+            <fetchPlan extends="_base">
+                <property name="creator" fetchPlan="_instance_name"/>
+                <property name="shipper" fetchPlan="_instance_name"/>
+                <property name="consignee" fetchPlan="_instance_name"/>
+                <property name="departurePort" fetchPlan="_instance_name"/>
+                <property name="destinationPort" fetchPlan="_instance_name"/>
+                <property name="carrier" fetchPlan="_base"/>
+                <property name="items" fetchPlan="_base">
+                    <property name="dim" fetchPlan="_base"/>
+                </property>
+            </fetchPlan>
+            <loader/>
+            <collection id="itemsDc" property="items"/>
+        </instance>
+        <collection id="companyDc" class="com.company.spacetrans.entity.Customer">
+            <fetchPlan extends="_instance_name"/>
+            <loader id="companyDl">
+                <query>
+                    <![CDATA[select e from st_Company e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="individualDc" class="com.company.spacetrans.entity.Customer">
+            <fetchPlan extends="_instance_name"/>
+            <loader id="individualDl">
+                <query>
+                    <![CDATA[select e from st_Individual e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" expand="editActions">
+        <form id="form" dataContainer="waybillDc">
+            <column id="colFields" width="300">
+                <textField id="referenceField" property="reference"/>
+
+                <entityComboBox id="shipperField"
+                                    property="shipper"
+                                    dataContainer="waybillDc"
+                                    align="MIDDLE_LEFT"/>
+
+
+                <entityPicker id="consigneeField" property="consignee" dataContainer="waybillDc">
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityPicker>
+                <entityPicker id="departurePortField" property="departurePort">
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityPicker>
+                <entityPicker id="destinationPortField" property="destinationPort">
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityPicker>
+                <entityPicker id="carrierField" property="carrier">
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityPicker>
+                <textField id="totalWeightField" property="totalWeight"/>
+                <textField id="totalChargeField" property="totalCharge"/>
+            </column>
+            <column id="colChecks">
+                <hbox>
+                </hbox>
+                <checkBox id="checkShipperIndividual"   caption="Select individual"/>
+                <checkBox id="checkConsigneeIndividual" caption="Select individual"/>
+                <comboBox id="astroBodyDep" textInputAllowed="false" caption="msg://astroBodyDep.caption"/>
+                <comboBox id="astroBodyDest" textInputAllowed="false" caption="msg://astroBodyDest.caption"/>
+
+
+            </column>
+        </form>
+        <groupBox id="itemsBox" caption="msg://com.company.spacetrans.entity/Waybill.items">
+            <table id="itemsTable" dataContainer="itemsDc" width="100%" height="200px">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                    <action id="up" icon="ARROW_UP" trackSelection="true"/>
+                    <action id="down" icon="ARROW_DOWN" trackSelection="true"/>
+                </actions>
+                <columns>
+                    <column id="number" sort="ASCENDING"/>
+                    <column id="name"/>
+                    <column id="weight"/>
+                    <column id="charge"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="itemsTable.create"/>
+                    <button action="itemsTable.edit"/>
+                    <button action="itemsTable.remove"/>
+                    <button action="itemsTable.up"/>
+                    <button action="itemsTable.down"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

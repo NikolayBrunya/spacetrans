@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://carrierEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="carrierDc"
+                  class="com.company.spacetrans.entity.Carrier">
+            <fetchPlan extends="_base">
+                <property name="ports" fetchPlan="_base">
+                    <property name="planet" fetchPlan="_base"/>
+                    <property name="moon" fetchPlan="_base"/>
+                    <property name="coordinates" fetchPlan="_base"/>
+                </property>
+            </fetchPlan>
+            <loader/>
+            <collection id="portsDc" property="ports"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" expand="editActions">
+        <form id="form" dataContainer="carrierDc">
+            <column width="350px">
+                <textField id="nameField" property="name"/>
+            </column>
+        </form>
+        <groupBox id="portsBox" caption="msg://com.company.spacetrans.entity/Carrier.ports">
+            <table id="portsTable" dataContainer="portsDc" width="100%" height="200px">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="name"/>
+                    <column id="isDefault"/>
+                    <column id="planet"/>
+                    <column id="moon"/>
+                    <column id="coordinates"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="portsTable.add"/>
+                    <button action="portsTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

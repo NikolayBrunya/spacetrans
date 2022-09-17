@@ -3,16 +3,21 @@
 
     <menu id="application" caption="msg://com.company.spacetrans/menu.application" insertBefore="administration" expanded="true">
 
+        <item screen="st_Waybill.browse" caption="msg://com.company.spacetrans.screen.waybill/waybillBrowse.menu"/>
+        <item screen="st_Individual.browse"  caption="msg://com.company.spacetrans.screen.individual/individualBrowse.menu"/>
+        <item screen="st_Company.browse" caption="msg://com.company.spacetrans.screen.company/companyBrowse.menu"/>
+
         <menu id="settings" caption="msg://com.company.spacetrans/menu_config.settings">
             <item screen="st_User.browse" caption="msg://com.company.spacetrans.screen.user/UserBrowse.caption"/>
             <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
         </menu>
         <menu id="references" caption="msg://com.company.spacetrans/menu_config.references" expanded="true">
             <item screen="st_Gas.browse" caption="msg://com.company.spacetrans.screen.gas/gasBrowse.menu"/>
-            <item screen="st_Atmosphere.browse" caption="msg://com.company.spacetrans.screen.atmosphere/atmosphereBrowse.menu"/>
             <item screen="st_Planet.browse" caption="msg://com.company.spacetrans.screen.planet/planetBrowse.menu"/>
             <item screen="st_Moon.browse" caption="msg://com.company.spacetrans.screen.moon/moonBrowse.menu"/>
+            <item screen="st_Spaceport.browse"  caption="msg://com.company.spacetrans.screen.spaceport/spaceportBrowse.menu"/>
         </menu>
+        <item screen="st_Carrier.browse" caption="msg://com.company.spacetrans.screen.carrier/carrierBrowse.menu"/>
 
     </menu>
 

@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://moonBrowse.caption"
-        focusComponent="moonsTable">
+        caption="msg://waybillItemBrowse.caption"
+        focusComponent="waybillItemsTable">
     <data readOnly="true">
-        <collection id="moonsDc"
-                    class="com.company.spacetrans.entity.Moon">
+        <collection id="waybillItemsDc"
+                    class="com.company.spacetrans.entity.WaybillItem">
             <fetchPlan extends="_base">
-                <property name="atmosphere" fetchPlan="_base"/>
-                <property name="planet" fetchPlan="_base"/>
+                <property name="dim" fetchPlan="_base"/>
+                <property name="waybill" fetchPlan="_instance_name">
+                    <property name="reference"/>
+                </property>
             </fetchPlan>
-            <loader id="moonsDl">
+            <loader id="waybillItemsDl">
                 <query>
-                    <![CDATA[select e from st_Moon e]]>
+                    <![CDATA[select e from st_WaybillItem e]]>
                 </query>
             </loader>
         </collection>
@@ -33,34 +35,36 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="moonsTable" spacing="true">
+    <layout expand="waybillItemsTable" spacing="true">
         <filter id="filter"
-                dataLoader="moonsDl">
+                dataLoader="waybillItemsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="moonsTable"
+        <groupTable id="waybillItemsTable"
                     width="100%"
-                    dataContainer="moonsDc">
+                    dataContainer="waybillItemsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
+                <column id="number"/>
                 <column id="name"/>
-                <column id="mass"/>
-                <column id="picture"/>
-                <column id="atmosphere"/>
-                <column id="planet"/>
+                <column id="weight"/>
+                <column id="dim.lenght"/>
+                <column id="dim.width"/>
+                <column id="dim.height"/>
+                <column id="charge"/>
+                <column id="waybill"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="moonsTable.create"/>
-                <button id="editBtn" action="moonsTable.edit"/>
-                <button id="removeBtn" action="moonsTable.remove"/>
-                <fileStorageUpload id="uploadMoons"
-                                   fileStoragePutMode="MANUAL"/>
+                <button id="createBtn" action="waybillItemsTable.create"/>
+                <button id="editBtn" action="waybillItemsTable.edit"/>
+                <button id="removeBtn" action="waybillItemsTable.remove"/>
+
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

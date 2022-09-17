@@ -4,6 +4,7 @@ import io.jmix.core.FileRef;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.annotation.NumberFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ public class AstronomicalBody {
     @NotNull
     private String name;
 
+    @NumberFormat(pattern = "#,##0.######", decimalSeparator = ".", groupingSeparator = ",")
     @Positive(message = "{msg://com.company.spacetrans.entity/AstronomicalBody.mass.validation.Positive}")
     @Column(name = "MASS", nullable = false)
     @NotNull

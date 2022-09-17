@@ -4,7 +4,6 @@ import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @JmixEntity
 @Table(name = "ST_MOON", indexes = {
@@ -13,15 +12,13 @@ import javax.validation.constraints.NotNull;
 })
 @Entity(name = "st_Moon")
 public class Moon extends AstronomicalBody {
-    @JoinColumn(name = "ATMOSPHERE_ID", nullable = false)
+    @JoinColumn(name = "ATMOSPHERE_ID")
     @Composition
-    @NotNull
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     private Atmosphere atmosphere;
 
-    @NotNull
-    @JoinColumn(name = "PLANET_ID", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "PLANET_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Planet planet;
 
     public Planet getPlanet() {

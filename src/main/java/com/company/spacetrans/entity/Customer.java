@@ -5,6 +5,7 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class Customer {
     @NotNull
     private String name;
 
+    @Email
     @Column(name = "EMAIL")
     private String email;
 

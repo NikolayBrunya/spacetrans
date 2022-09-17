@@ -1,5 +1,6 @@
 package com.company.spacetrans.entity;
 
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
@@ -14,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @Entity(name = "st_Individual")
 @PrimaryKeyJoinColumn(name = "INDIVIDUAL_ID", referencedColumnName = "ID")
 public class Individual extends Customer {
-    @InstanceName
     @Column(name = "FIRST_NAME", nullable = false)
     @NotNull
     private String firstName;
@@ -37,5 +37,11 @@ public class Individual extends Customer {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    @InstanceName
+    @DependsOnProperties({"name"})
+    public String getInstanceName() {
+        return String.format("%s", getName());
     }
 }

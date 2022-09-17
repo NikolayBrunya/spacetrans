@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://moonBrowse.caption"
-        focusComponent="moonsTable">
+        caption="msg://companyBrowse.caption"
+        focusComponent="companiesTable">
     <data readOnly="true">
-        <collection id="moonsDc"
-                    class="com.company.spacetrans.entity.Moon">
-            <fetchPlan extends="_base">
-                <property name="atmosphere" fetchPlan="_base"/>
-                <property name="planet" fetchPlan="_base"/>
-            </fetchPlan>
-            <loader id="moonsDl">
+        <collection id="companiesDc"
+                    class="com.company.spacetrans.entity.Company">
+            <fetchPlan extends="_base"/>
+            <loader id="companiesDl">
                 <query>
-                    <![CDATA[select e from st_Moon e]]>
+                    <![CDATA[select e from st_Company e]]>
                 </query>
             </loader>
         </collection>
@@ -33,14 +30,14 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="moonsTable" spacing="true">
+    <layout expand="companiesTable" spacing="true">
         <filter id="filter"
-                dataLoader="moonsDl">
+                dataLoader="companiesDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="moonsTable"
+        <groupTable id="companiesTable"
                     width="100%"
-                    dataContainer="moonsDc">
+                    dataContainer="companiesDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -48,19 +45,17 @@
             </actions>
             <columns>
                 <column id="name"/>
-                <column id="mass"/>
-                <column id="picture"/>
-                <column id="atmosphere"/>
-                <column id="planet"/>
+                <column id="email"/>
+                <column id="grade"/>
+                <column id="registrationId"/>
+                <column id="companyType"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="moonsTable.create"/>
-                <button id="editBtn" action="moonsTable.edit"/>
-                <button id="removeBtn" action="moonsTable.remove"/>
-                <fileStorageUpload id="uploadMoons"
-                                   fileStoragePutMode="MANUAL"/>
+                <button id="createBtn" action="companiesTable.create"/>
+                <button id="editBtn" action="companiesTable.edit"/>
+                <button id="removeBtn" action="companiesTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
