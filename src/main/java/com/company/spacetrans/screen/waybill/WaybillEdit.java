@@ -2,12 +2,15 @@ package com.company.spacetrans.screen.waybill;
 
 import com.company.spacetrans.entity.*;
 import com.company.spacetrans.screen.carrier.CarrierBrowse;
+import com.company.spacetrans.services.SpaceportService;
 import com.company.spacetrans.services.WaybillItemService;
+import com.company.spacetrans.services.WaybillService;
 import io.jmix.core.DataManager;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.action.Action;
 import io.jmix.ui.action.entitypicker.EntityLookupAction;
 import io.jmix.ui.component.*;
+import io.jmix.ui.model.CollectionChangeType;
 import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.model.CollectionPropertyContainer;
 import io.jmix.ui.model.InstanceContainer;
@@ -32,6 +35,8 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     private EntityLookupAction<Customer> consigneeFieldEntityLookup;
 
     @Autowired
+    private WaybillService waybillService;
+    @Autowired
     private ScreenBuilders screenBuilders;
     @Autowired
     private CollectionContainer<Customer> individualDc;
@@ -52,7 +57,12 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     private InstanceContainer<Waybill> waybillDc;
     @Autowired
     private ComboBox astroBodyDep;
-
+    @Autowired
+    private EntityPicker<Spaceport> departurePortField;
+    @Autowired
+    private EntityPicker<Spaceport> destinationPortField;
+    @Autowired
+    private SpaceportService spaceportService;
     @Autowired
     private ComboBox astroBodyDest;
     @Autowired
@@ -67,6 +77,26 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         astroBodyDep.setOptionsMap(planetMoon);
         astroBodyDest.setOptionsMap(planetMoon);
     }
+
+    @Subscribe(id = "itemsDc", target = Target.DATA_CONTAINER)
+    public void onItemsDcCollectionChange(CollectionContainer.CollectionChangeEvent<WaybillItem> event) {
+
+
+        // todo разобраться почему не изменяется на экране!!!
+        if (event.getChangeType() == CollectionChangeType.ADD_ITEMS ||
+            event.getChangeType() == CollectionChangeType.REMOVE_ITEMS ||
+            event.getChangeType() == CollectionChangeType.REFRESH)
+        {
+            var source = event.getSource();
+            if (source == null) return;
+            var item = source.getItems().stream().findAny().orElse(null);
+            if (item == null) return;
+            waybillService.calcTotalCharge(item.getWaybill());
+            waybillService.calcTotalWeight(item.getWaybill());
+        }
+
+    }
+
 
 
     @Subscribe("checkConsigneeIndividual")
@@ -91,6 +121,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     private Map<String, AstronomicalBody> loadPlanetMoon()
     {
+        // Формируем список планет/лун
         Map<String, AstronomicalBody> pmMap = new LinkedHashMap<>();
 
         dataManager.load(Planet.class)
@@ -111,6 +142,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     @Subscribe("carrierField.entityLookup")
     public void onCarrierFieldEntityLookup(Action.ActionPerformedEvent event) {
 
+        // Ищем перевозчика с введеными портами
         Waybill waybill = waybillDc.getItem();
 
         var dest = waybill.getDeparturePort();
@@ -140,6 +172,26 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     public void onItemsTableDown(Action.ActionPerformedEvent event) {
         waybillItemService.numberDown(itemsDc.getMutableItems(), itemsDc.getItem());
 
+    }
+
+    @Subscribe("astroBodyDep")
+    public void onAstroBodyDepValueChange(HasValue.ValueChangeEvent event) {
+        // поиск порта по умолчанию
+        if (event.getValue() instanceof AstronomicalBody) {
+            Spaceport defSp = spaceportService.getDefaultSpacePort((AstronomicalBody)event.getValue());
+            if (defSp != null) departurePortField.setValue(defSp);
+            else departurePortField.clear();
+        }
+    }
+
+    @Subscribe("astroBodyDest")
+    public void onAstroBodyDestValueChange(HasValue.ValueChangeEvent event) {
+        // поиск порта по умолчанию
+        if (event.getValue() instanceof AstronomicalBody) {
+            Spaceport defSp = spaceportService.getDefaultSpacePort((AstronomicalBody)event.getValue());
+            if (defSp != null) destinationPortField.setValue(defSp);
+            else destinationPortField.clear();
+        }
     }
 
 }

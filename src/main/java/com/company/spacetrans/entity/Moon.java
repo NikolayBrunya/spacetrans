@@ -8,7 +8,8 @@ import javax.persistence.*;
 @JmixEntity
 @Table(name = "ST_MOON", indexes = {
         @Index(name = "IDX_ST_MOON_ATMOSPHERE", columnList = "ATMOSPHERE_ID"),
-        @Index(name = "IDX_ST_MOON_PLANET", columnList = "PLANET_ID")
+        @Index(name = "IDX_ST_MOON_PLANET", columnList = "PLANET_ID"),
+        @Index(name = "IDX_ST_MOON_NAME", columnList = "NAME", unique = true)
 })
 @Entity(name = "st_Moon")
 public class Moon extends AstronomicalBody {

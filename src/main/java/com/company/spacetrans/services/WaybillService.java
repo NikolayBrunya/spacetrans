@@ -17,18 +17,25 @@ public class WaybillService {
 
     @Autowired
     private DataManager dataManager;
+    @Autowired
+    private WaybillItemService waybillItemService;
 
-    public double calcTotalWeight(Waybill waybill){
+    public void calcTotalWeight(Waybill waybill){
+       if (waybill == null) return;
        var i = waybill.getItems()
                              .stream()
                              .mapToDouble(item -> item.getWeight() == null ? 0 : item.getWeight())
                              .sum();
        waybill.setTotalWeight(i);
-       return  i;
+
+    }
+
+    public  void recalItemsNumber(Waybill waybill){
+        waybillItemService.recalcAllNumbers(waybill);
     }
 
     public void calcTotalCharge(@NotNull Waybill waybill) {
-
+        if (waybill == null) return;
         // Считаем стоимость всех итемов
         var sum = waybill.getItems()
                 .stream()

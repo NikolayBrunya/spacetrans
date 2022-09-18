@@ -1,5 +1,6 @@
 package com.company.spacetrans.listener;
 
+import com.company.spacetrans.entity.User;
 import com.company.spacetrans.entity.Waybill;
 import com.company.spacetrans.entity.WaybillItem;
 import com.company.spacetrans.services.WaybillService;
@@ -8,6 +9,7 @@ import io.jmix.core.Id;
 import io.jmix.core.event.EntityChangedEvent;
 import io.jmix.core.event.EntityLoadingEvent;
 import io.jmix.core.event.EntitySavingEvent;
+import io.jmix.core.security.CurrentAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -17,10 +19,13 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class WaybillItemEventListener {
 
     @Autowired
+    CurrentAuthentication currentAuthentication;
+    @Autowired
     private DataManager dataManager;
 
     @Autowired
     private WaybillService waybillService;
+
 
     @EventListener
     public void onWaybillItemChangedBeforeCommit(EntityChangedEvent<WaybillItem> event) {
@@ -34,6 +39,7 @@ public class WaybillItemEventListener {
             var itemId = event.getChanges().getOldReferenceId("waybill");
             waybill = (Waybill) dataManager.load(itemId).one();
             // 3 - перенумировать позиции
+            waybillService.recalItemsNumber(waybill);
         } else {
             var item = dataManager.load(event.getEntityId()).one();
             waybill = item.getWaybill();
@@ -42,6 +48,8 @@ public class WaybillItemEventListener {
         waybillService.calcTotalWeight(waybill);
         // 2 - пересчитать итоговую стоимость
         waybillService.calcTotalCharge(waybill);
+        // А вот здесь не нужно явно сохранять ведомость???
+        //waybill.setCreator((User) currentAuthentication.getUser());
     }
 
 //    @TransactionalEventListener

@@ -86,8 +86,8 @@
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
-                <textField id="totalWeightField" property="totalWeight"/>
-                <textField id="totalChargeField" property="totalCharge"/>
+                <textField id="totalWeightField" property="totalWeight" editable="false"/>
+                <textField id="totalChargeField" property="totalCharge" editable="false"/>
             </column>
             <column id="colChecks">
                 <hbox>

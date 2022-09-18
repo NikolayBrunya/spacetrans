@@ -64,5 +64,13 @@ public class WaybillItemService {
         return num;
     }
 
+    public void recalcAllNumbers( Waybill waybill )
+    {
+        int num = 1;
+        for ( WaybillItem item:waybill.getItems() ) {
+            item.setNumber(num);
+            num++;
+        }
+    }
 
 }

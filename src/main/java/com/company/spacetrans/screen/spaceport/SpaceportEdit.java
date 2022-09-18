@@ -7,6 +7,7 @@ import io.jmix.ui.Notifications;
 import io.jmix.ui.component.Button;
 import io.jmix.ui.component.EntityPicker;
 import io.jmix.ui.component.HasValue;
+import io.jmix.ui.component.ValidationErrors;
 import io.jmix.ui.model.InstanceContainer;
 import io.jmix.ui.screen.*;
 import com.company.spacetrans.entity.Spaceport;
@@ -28,6 +29,19 @@ public class SpaceportEdit extends StandardEditor<Spaceport> {
     @Autowired
     private InstanceContainer<Spaceport> spaceportDc;
 
+    @Subscribe
+    public void onValidation(ValidationEvent event) {
+
+        if (spaceportDc.getItem().getMoon() != null && spaceportDc.getItem().getPlanet() != null){
+            ValidationErrors errors = new ValidationErrors();
+            errors.add(planetField, "One field Planet/Moon must be filled");
+            errors.add(moonField, "One field Planet/Moon must be filled");
+            event.addErrors(errors);
+        }
+    }
+
+
+
     @Subscribe(id = "spaceportDc", target = Target.DATA_CONTAINER)
     public void onSpaceportDcItemPropertyChange(InstanceContainer.ItemPropertyChangeEvent<Spaceport> event) {
 //        if (event.getProperty().equals("isDefault")) {
@@ -39,14 +53,7 @@ public class SpaceportEdit extends StandardEditor<Spaceport> {
 //        }
     }
 
-    @Subscribe
-    public void onAfterClose(AfterCloseEvent event) {
-//        CloseAction closeAction = event.getCloseAction();
-//        notifications.create().withCaption("Event")
-//                .withDescription("close" + closeAction)
-//                .withType(Notifications.NotificationType.TRAY)
-//                .show();
-    }
+
 
 
     @Subscribe("planetField")

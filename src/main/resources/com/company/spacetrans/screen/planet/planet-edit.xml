@@ -28,7 +28,7 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="editActions">
-        <hbox id="base">
+        <hbox id="dropZone">
             <form id="form" dataContainer="planetDc">
                 <column width="350px">
                     <textField id="nameField" property="name"/>
@@ -36,7 +36,8 @@
                     <fileStorageUpload id="pictureField"
                                        showClearButton="true"
                                        property="picture"
-                                       uploadButtonIcon="UPLOAD"/>
+                                       uploadButtonIcon="UPLOAD"
+                                       dropZone="dropZone"/>
                     <textField id="semiMajorAxisField" property="semiMajorAxis"/>
                     <textField id="orbitalPeriodField" property="orbitalPeriod"/>
                     <textField id="rotationPeriodField" property="rotationPeriod"/>
@@ -50,8 +51,8 @@
                 </column>
             </form>
             <browserFrame id="pictureBrowserFrame"
-                          height="400px"
-                          width="400px"/>
+                          height="500px"
+                          width="500px"/>
 
         </hbox>
         <hbox id="editActions" spacing="true">
