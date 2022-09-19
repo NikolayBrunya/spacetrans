@@ -61,7 +61,15 @@ public class WaybillTest extends SpaceTransBaseTest{
         //----------------------------------------------------------
 
         // Действие
-       dataManager.save(waybill);
+
+        //region Вот так вылетает при сохранении
+//       dataManager.save(waybill);
+//       dataManager.save(item1, item2);
+        //endregion Вот так вылетает при сохранении
+
+        // а вот так не считает почему то?
+        // вроде событие есть на сущности
+        dataManager.save(waybill, item1, item2);
 
        // Проверка
         var check = dataManager.load(Waybill.class).id(waybillId).one();
