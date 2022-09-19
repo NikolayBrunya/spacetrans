@@ -17,6 +17,8 @@ public class WaybillTest extends SpaceTransBaseTest{
     @Test
     public void checkTotals()
     {
+
+        //todo непонятно почему не работает тест - вопросы в блоке 'действие'
         //----------------------------------------------------------
         //region Дано
         var waybill = dataManager.create(Waybill.class);
@@ -37,7 +39,7 @@ public class WaybillTest extends SpaceTransBaseTest{
         dim1.setLenght(var1);
         dim1.setWidth(var1);
         item1.setDim( dim1);
-        waybillItemService.calcCharge(item1);
+        waybillItemService.calcCharge(item1); // нет в WaybillItemEventListener явный вызов
 
         //endregion Item 1
         //----------------------------------------------------------
@@ -52,7 +54,7 @@ public class WaybillTest extends SpaceTransBaseTest{
         dim2.setLenght(var2);
         dim2.setWidth(var2);
         item2.setDim( dim2);
-        waybillItemService.calcCharge(item2);
+        waybillItemService.calcCharge(item2); // нет в WaybillItemEventListener явный вызов
         //endregion Item 2
 
         waybill.setItems(List.of(item1, item2));
@@ -68,7 +70,9 @@ public class WaybillTest extends SpaceTransBaseTest{
         //endregion Вот так вылетает при сохранении
 
         // а вот так не считает почему то?
-        // вроде событие есть на сущности
+        // вроде событие подсчета есть на сущности (WaybillItemEventListener)
+        // он не вызывает WaybillItemEventListener.onWaybillItemChangedBeforeCommit?
+        // как правильно?
         dataManager.save(waybill, item1, item2);
 
        // Проверка

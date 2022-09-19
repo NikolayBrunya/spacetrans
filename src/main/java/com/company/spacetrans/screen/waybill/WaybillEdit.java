@@ -82,7 +82,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     public void onItemsDcCollectionChange(CollectionContainer.CollectionChangeEvent<WaybillItem> event) {
 
 
-        // todo разобраться почему не изменяется на экране!!!
+        // todo  почему не изменяется отображение на экране?
         if (event.getChangeType() == CollectionChangeType.ADD_ITEMS ||
             event.getChangeType() == CollectionChangeType.REMOVE_ITEMS ||
             event.getChangeType() == CollectionChangeType.REFRESH)
@@ -101,7 +101,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     @Subscribe("checkConsigneeIndividual")
     public void onCheckConsigneeIndividualValueChange(HasValue.@NotNull ValueChangeEvent<Boolean> event) {
-        //todo clear field
+        // todo это может не сильно важно, но непонятно почему сначала caption, а потом галка в чекбоксе
         if (event.getValue()){
             consigneeFieldEntityLookup.setScreenId("st_Individual.browse");
         }else {
@@ -111,7 +111,6 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     @Subscribe("checkShipperIndividual")
     public void onCheckShipperIndividualValueChange(HasValue.ValueChangeEvent<Boolean> event) {
-        //todo clear field
         if (event.getValue()){
             shipperField.setOptionsContainer(individualDc);
         }else {
@@ -165,6 +164,8 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     @Subscribe("itemsTable.up")
     public void onItemsTableUp(Action.ActionPerformedEvent event) {
+        //todo я вроде сортировку поставил по номеру, даже меняются номера элементов
+        // но при этом сортировка не применяется
         waybillItemService.numberUp(itemsDc.getMutableItems(), itemsDc.getItem());
     }
 

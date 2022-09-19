@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @EditedEntityContainer("moonDc")
 public class MoonEdit extends StandardEditor<Moon> {
 
-//TODO: переделать асторономическое тело в виде фрейма
     @Autowired
     private BrowserFrame pictureBrowserFrame;
 
