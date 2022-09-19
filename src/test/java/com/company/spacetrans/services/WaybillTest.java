@@ -56,18 +56,23 @@ public class WaybillTest extends SpaceTransBaseTest{
         item2.setDim( dim2);
         waybillItemService.calcCharge(item2); // нет в WaybillItemEventListener явный вызов
         //endregion Item 2
-
-        waybill.setItems(List.of(item1, item2));
         //----------------------------------------------------------
         //endregion Дано
         //----------------------------------------------------------
 
+        // непонятно надо в основной объект подкидывать связанные объекты или нет?
+        waybill.setItems(List.of(item1, item2));
         // Действие
 
         //region Вот так вылетает при сохранении
 //       dataManager.save(waybill);
 //       dataManager.save(item1, item2);
         //endregion Вот так вылетает при сохранении
+
+        // просто вот сохранить ведомость тоже не получается
+        // похоже он не строит какое то дерево зависимостей для сохранения
+        // During synchronization a new object was found through a relationship that was not marked cascade PERSIST
+       // dataManager.save(waybill);
 
         // а вот так не считает почему то?
         // вроде событие подсчета есть на сущности (WaybillItemEventListener)
