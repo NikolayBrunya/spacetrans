@@ -83,17 +83,17 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
 
         // todo  почему не изменяется отображение на экране?
-        if (event.getChangeType() == CollectionChangeType.ADD_ITEMS ||
-            event.getChangeType() == CollectionChangeType.REMOVE_ITEMS ||
-            event.getChangeType() == CollectionChangeType.REFRESH)
-        {
-            var source = event.getSource();
-            if (source == null) return;
-            var item = source.getItems().stream().findAny().orElse(null);
-            if (item == null) return;
-            waybillService.calcTotalCharge(item.getWaybill());
-            waybillService.calcTotalWeight(item.getWaybill());
-        }
+//        if (event.getChangeType() == CollectionChangeType.ADD_ITEMS ||
+//            event.getChangeType() == CollectionChangeType.REMOVE_ITEMS ||
+//            event.getChangeType() == CollectionChangeType.REFRESH)
+//        {
+//            var source = event.getSource();
+//            if (source == null) return;
+//            var item = source.getItems().stream().findAny().orElse(null);
+//            if (item == null) return;
+//            waybillService.calcTotalCharge(item.getWaybill());
+//            waybillService.calcTotalWeight(item.getWaybill());
+//        }
 
     }
 

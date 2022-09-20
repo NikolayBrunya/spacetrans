@@ -52,13 +52,16 @@ public class WaybillItemService {
 
     public int getLastNumber(WaybillItem waybillItem) {
         var num = 0;
+        int i = 0;
         var waybill = waybillItem.getWaybill();
-        var items = waybill.getItems()
-                .stream()
-                .sorted(Comparator.comparing(WaybillItem::getNumber))
-                .collect(Collectors.toList());
-        if (items.size() > 0) {
-            num = items.get(items.size() - 1).getNumber();
+        if (waybill != null) {
+            var items = waybill.getItems();
+            if ( items != null && items.size() > 0) {
+                items.stream()
+                        .sorted(Comparator.comparing(WaybillItem::getNumber))
+                        .collect(Collectors.toList());
+                num = items.get(items.size() - 1).getNumber();
+            }
         }
         num++;
         return num;
