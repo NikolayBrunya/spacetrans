@@ -32,13 +32,14 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="planetsTable" spacing="true">
+    <layout expand="wrapper" spacing="true">
         <filter id="filter"
                 dataLoader="planetsDl">
             <properties include=".*"/>
         </filter>
+        <hbox id="wrapper" spacing="true" width="100%" expand="planetsTable">
         <groupTable id="planetsTable"
-                    width="100%"
+                    height="100%"
                     dataContainer="planetsDc">
             <actions>
                 <action id="create" type="create"/>
@@ -63,9 +64,11 @@
                 <button id="removeBtn" action="planetsTable.remove"/>
                 <fileStorageUpload id="uploadPlanets"
                                    fileStoragePutMode="MANUAL"/>
-<!--                <button id="addFromCSV" caption="msg://addFromCSV.caption"/>-->
             </buttonsPanel>
         </groupTable>
+            <image id="pictureAstro" width="200px" height="200px"
+            scaleMode="SCALE_DOWN" dataContainer="planetsDc" property="picture"/>
+        </hbox>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

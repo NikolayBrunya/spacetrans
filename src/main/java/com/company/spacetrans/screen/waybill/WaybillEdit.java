@@ -34,6 +34,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     @Named("consigneeField.entityLookup")
     private EntityLookupAction<Customer> consigneeFieldEntityLookup;
 
+
     @Autowired
     private WaybillService waybillService;
     @Autowired
@@ -83,25 +84,31 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
 
         // todo  почему не изменяется отображение на экране?
-//        if (event.getChangeType() == CollectionChangeType.ADD_ITEMS ||
-//            event.getChangeType() == CollectionChangeType.REMOVE_ITEMS ||
-//            event.getChangeType() == CollectionChangeType.REFRESH)
-//        {
-//            var source = event.getSource();
-//            if (source == null) return;
-//            var item = source.getItems().stream().findAny().orElse(null);
-//            if (item == null) return;
-//            waybillService.calcTotalCharge(item.getWaybill());
-//            waybillService.calcTotalWeight(item.getWaybill());
-//        }
+        if (event.getChangeType() == CollectionChangeType.ADD_ITEMS ||
+            event.getChangeType() == CollectionChangeType.REMOVE_ITEMS ||
+            event.getChangeType() == CollectionChangeType.REFRESH)
+        {
+            var curWB = getEditedEntity();
+            waybillService.calcTotalCharge(curWB);
+            waybillService.calcTotalWeight(curWB);
+        }
 
+    }
+
+    @Subscribe(id = "itemsDc", target = Target.DATA_CONTAINER)
+    public void onItemsDcItemPropertyChange(InstanceContainer.ItemPropertyChangeEvent<WaybillItem> event) {
+        if (event.getProperty().equals("charge")|| event.getProperty().equals("weight") )
+        {
+            var curWB = getEditedEntity();
+            waybillService.calcTotalCharge(curWB);
+            waybillService.calcTotalWeight(curWB);
+        }
     }
 
 
 
     @Subscribe("checkConsigneeIndividual")
     public void onCheckConsigneeIndividualValueChange(HasValue.@NotNull ValueChangeEvent<Boolean> event) {
-        // todo это может не сильно важно, но непонятно почему сначала caption, а потом галка в чекбоксе
         if (event.getValue()){
             consigneeFieldEntityLookup.setScreenId("st_Individual.browse");
         }else {
@@ -141,7 +148,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     @Subscribe("carrierField.entityLookup")
     public void onCarrierFieldEntityLookup(Action.ActionPerformedEvent event) {
 
-        // Ищем перевозчика с введеными портами
+        // Ищем перевозчика с введенными портами
         Waybill waybill = waybillDc.getItem();
 
         var dest = waybill.getDeparturePort();
@@ -164,14 +171,14 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     @Subscribe("itemsTable.up")
     public void onItemsTableUp(Action.ActionPerformedEvent event) {
-        //todo я вроде сортировку поставил по номеру, даже меняются номера элементов
-        // но при этом сортировка не применяется
         waybillItemService.numberUp(itemsDc.getMutableItems(), itemsDc.getItem());
+        itemsTable.sort("number", Table.SortDirection.ASCENDING);
     }
 
     @Subscribe("itemsTable.down")
     public void onItemsTableDown(Action.ActionPerformedEvent event) {
         waybillItemService.numberDown(itemsDc.getMutableItems(), itemsDc.getItem());
+        itemsTable.sort("number", Table.SortDirection.ASCENDING);
 
     }
 

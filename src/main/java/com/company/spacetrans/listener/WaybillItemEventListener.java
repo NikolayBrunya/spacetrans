@@ -41,6 +41,7 @@ public class WaybillItemEventListener {
             // 3 - перенумировать позиции
             waybillService.recalItemsNumber(waybill);
         } else {
+
             var item = dataManager.load(event.getEntityId()).one();
             waybill = item.getWaybill();
         }

@@ -33,13 +33,14 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="moonsTable" spacing="true">
+    <layout expand="wrapper" spacing="true">
         <filter id="filter"
                 dataLoader="moonsDl">
             <properties include=".*"/>
         </filter>
+        <hbox id="wrapper" width="100%" spacing="true" expand="moonsTable">
         <groupTable id="moonsTable"
-                    width="100%"
+                    height="100%"
                     dataContainer="moonsDc">
             <actions>
                 <action id="create" type="create"/>
@@ -63,6 +64,9 @@
                                    fileStoragePutMode="MANUAL"/>
             </buttonsPanel>
         </groupTable>
+            <image id="pictureMoon" width="200px" height="200px" scaleMode="SCALE_DOWN"
+                   dataContainer="moonsDc" property="picture"/>
+        </hbox>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

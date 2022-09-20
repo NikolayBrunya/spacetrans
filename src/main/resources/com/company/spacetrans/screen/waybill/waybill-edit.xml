@@ -7,7 +7,7 @@
                   class="com.company.spacetrans.entity.Waybill">
             <fetchPlan extends="_base">
                 <property name="creator" fetchPlan="_instance_name"/>
-                <property name="shipper" fetchPlan="_instance_name"/>
+                <property name="shipper" fetchPlan="_local"/>
                 <property name="consignee" fetchPlan="_instance_name"/>
                 <property name="departurePort" fetchPlan="_instance_name"/>
                 <property name="destinationPort" fetchPlan="_instance_name"/>

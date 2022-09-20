@@ -7,4 +7,6 @@ import com.company.spacetrans.entity.Waybill;
 @UiDescriptor("waybill-browse.xml")
 @LookupComponent("waybillsTable")
 public class WaybillBrowse extends StandardLookup<Waybill> {
+
+
 }

@@ -49,7 +49,7 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="number"/>
+                <column id="number" sortable="true"/>
                 <column id="name"/>
                 <column id="weight"/>
                 <column id="dim.lenght"/>
